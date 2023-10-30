@@ -25,11 +25,12 @@ jobs:
           APP_VERSION=$(grep 'version = ' conf/application.conf | sed 's/[^0-9.]//g')
 
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
-      - name: Publish Artifact
-        run: >
-          mkdir -p artifacts
+      - name: Upload Artifact
+          uses: actions/upload-artifact@v2
+          with:
+               name: my-artifact
+               path: /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip
 
-          cp /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip artifacts/
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -37,5 +38,5 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip
+          name: my-artifact
           path: /
