@@ -1,54 +1,41 @@
+---
 name: CI/CD Pipeline
-
 on:
   push:
     branches:
-      - main  
-
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: adopt
+      - name: Build
+        run: |
+          sbt clean
+          sbt compile
+          sbt dist
+      - name: Extract APP_VERSION from application.conf
+        run: >
+          APP_VERSION=$(grep 'version = ' conf/application.conf | sed 's/[^0-9.]//g')
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'  
-        distribution: 'adopt' 
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+      - name: Publish Artifact
+        run: >
+          mkdir -p artifacts
 
-    - name: Build 
-      run: |
-        sbt clean
-        sbt compile
-        sbt dist
-
-    - name: Extract APP_VERSION from application.conf
-      run: |
-        APP_VERSION=$(grep 'version = ' conf/application.conf | sed 's/[^0-9.]//g')
-        echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
-
-    - name: Publish Artifact
-      run: |
-        mkdir -p artifacts
-        cp /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip artifacts/
-
- deploy:
+          cp /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip artifacts/
+  deploy:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: test-1.0-SNAPSHOT.zip
-        path: /
-
-    # - name: Extract and Deploy
-    #   run: |
-        
-    #     unzip -q /app-${{ needs.build.outputs.APP_VERSION }}.zip -d /
-    #     cd /app-${{ needs.build.outputs.APP_VERSION }}
-    #     ./bin/start-script
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-1.0-SNAPSHOT.zip
+          path: /
