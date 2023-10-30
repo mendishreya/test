@@ -33,6 +33,6 @@ jobs:
     - name: Publish Artifact
       run: |
         mkdir -p artifacts
-        cp target/universal/app-${{ env.APP_VERSION }}.zip artifacts/
+        cp /home/runner/work/test/test/target/universal/test-${{ env.APP_VERSION }}-SNAPSHOT.zip artifacts/
 
  
