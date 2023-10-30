@@ -35,4 +35,20 @@ jobs:
         mkdir -p artifacts
         cp /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip artifacts/
 
- 
+ deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: test-1.0-SNAPSHOT.zip
+        path: /
+
+    # - name: Extract and Deploy
+    #   run: |
+        
+    #     unzip -q /app-${{ needs.build.outputs.APP_VERSION }}.zip -d /
+    #     cd /app-${{ needs.build.outputs.APP_VERSION }}
+    #     ./bin/start-script
