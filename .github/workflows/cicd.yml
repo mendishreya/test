@@ -38,4 +38,4 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: my-artifact
-          path: /
+          path: /home/runner/test
