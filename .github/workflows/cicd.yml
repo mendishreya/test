@@ -19,7 +19,7 @@ jobs:
         java-version: '11'  
         distribution: 'adopt' 
 
-    - name: Build and Test
+    - name: Build 
       run: |
         sbt clean
         sbt compile
@@ -33,6 +33,6 @@ jobs:
     - name: Publish Artifact
       run: |
         mkdir -p artifacts
-        cp /home/runner/work/test/test/target/universal/test-${{ env.APP_VERSION }}-SNAPSHOT.zip artifacts/
+        cp /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip artifacts/
 
  
