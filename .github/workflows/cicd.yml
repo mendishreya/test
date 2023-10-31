@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: /home/runner/work/test/test/target/universal/test-${{ env.APP_VERSION }}.zip
+          path: /home/runner/work/test/test/target/universal/test-1.0-SNAPSHOT.zip
   deploy:
     needs: build
     runs-on: ubuntu-latest
