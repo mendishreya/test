@@ -39,6 +39,8 @@ jobs:
         with:
           name: my-artifact
           path: /home/runner/test
+      - name: List Downloaded Artifacts
+        run: ls /home/runner/test
       - name: Extract and Deploy
         run: |
             unzip -q  /home/runner/test/my-artifact.zip -d /home/runner/test
