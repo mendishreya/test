@@ -22,7 +22,7 @@ jobs:
           sbt dist
       - name: Extract APP_VERSION from application.conf
         run: >
-          APP_VERSION=$(grep 'version = ' test/conf/application.conf | sed 's/[^0-9.]//g')
+          APP_VERSION=$(grep 'version = ' /test/conf/application.conf | sed 's/[^0-9.]//g')
           echo "The extracted APP_VERSION is $APP_VERSION"
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
       - name: Upload Artifact
@@ -42,6 +42,6 @@ jobs:
       # - name: Extract and Deploy
       #   run: |
       #       unzip -q  /home/runner/test/my-artifact.zip -d /home/runner/test
-      #       cd /home/runner/test/my-artifact-${{ needs.build.outputs.APP_VERSION }}
+      #       cd /home/runner/test/test-${{ needs.build.outputs.APP_VERSION }}
       #       ./bin/start-script
 
