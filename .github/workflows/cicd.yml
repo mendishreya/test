@@ -39,9 +39,9 @@ jobs:
         with:
           name: my-artifact
           path: /home/runner/test
-      # - name: Extract and Deploy
-      #   run: |
-      #       unzip -q  /home/runner/test/my-artifact.zip -d /home/runner/test
-      #       cd /home/runner/test/test-${{ needs.build.outputs.APP_VERSION }}
-      #       ./bin/start-script
+      - name: Extract and Deploy
+        run: |
+            unzip -q  /home/runner/test/my-artifact.zip -d /home/runner/test
+            cd /home/runner/test/test-${{ needs.build.outputs.APP_VERSION }}
+            ./bin/start-script
 
