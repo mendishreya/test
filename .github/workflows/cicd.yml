@@ -45,5 +45,7 @@ jobs:
         run: |
             unzip -q  /home/runner/test/test-1.0-SNAPSHOT.zip -d /home/runner/test
             cd /home/runner/test/test-1.0-SNAPSHOT
-            ./bin/start-script
+       # command to run the application
+       
+       
 
